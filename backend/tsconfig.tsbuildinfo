@@ -1,0 +1,1 @@
+{"root":["./src/app.ts","./src/config.ts","./src/controllers/adduseranswers.ts","./src/controllers/teckziteloginhandler.ts","./src/middleware/teckziteusermiddleware.ts","./src/models/bingoanswer.ts","./src/models/teckziteusermodel.ts","./src/routes/teckziteroutes.ts"],"version":"5.8.2"}
