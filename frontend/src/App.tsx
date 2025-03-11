@@ -9,16 +9,18 @@ import { customizedToast } from "../src/utils/toast"; // Assuming you have a uti
 
 export default function App() {
   const switchCountRef = useRef<number>(0);
+  
 
   useEffect(() => {
     const handleVisibilityChange = () => {
       if (document.hidden) {
         switchCountRef.current += 1;
         if (switchCountRef.current >= 3) {
-          customizedToast({ type: "error", message: "⚠️ Test submitted due to multiple tab switches!" });
+          // customizedToast({ type: "error", message: "⚠️ Test submitted due to multiple tab switches!" });
           // TODO: Add test submission logic here
         } else {
           customizedToast({ type: "warn", message: `⚠️ Tab switching is not allowed! (${switchCountRef.current}/3)` });
+          customizedToast({ type: "warn", message: `⚠️ Tab switching is not allowed!` });
         }
       }
     };
@@ -50,7 +52,7 @@ export default function App() {
 
     document.addEventListener("visibilitychange", handleVisibilityChange);
     window.addEventListener("blur", handleBlur);
-    // document.addEventListener("contextmenu", disableRightClick);
+    document.addEventListener("contextmenu", disableRightClick);
     document.addEventListener("keydown", disableDevTools);
     document.addEventListener("copy", disableCopy);
     document.addEventListener("paste", disablePaste);
@@ -58,7 +60,7 @@ export default function App() {
     return () => {
       document.removeEventListener("visibilitychange", handleVisibilityChange);
       window.removeEventListener("blur", handleBlur);
-      // document.removeEventListener("contextmenu", disableRightClick);
+      document.removeEventListener("contextmenu", disableRightClick);
       document.removeEventListener("keydown", disableDevTools);
       document.removeEventListener("copy", disableCopy);
       document.removeEventListener("paste", disablePaste);

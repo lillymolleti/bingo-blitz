@@ -1,5 +1,6 @@
 import { Request, Response, NextFunction } from "express";
 import { BingoAnswerModel } from "../models/BingoAnswer";
+import { teckziteUserModel } from "../models/teckziteUserModel";
 
 export const addUserAnswers = async (
   req: Request,
@@ -27,10 +28,17 @@ export const addUserAnswers = async (
         .status(400)
         .json({ message: "User has already submitted answers" });
     }
+    const teckziteUser = await teckziteUserModel.findOne({teckziteId});
+    if (!teckziteUser) {
+      return res
+        .status(400)
+        .json({ message: "User does not exists" });
+    }
 
     // Store answers
     const bingoAnswer = new BingoAnswerModel({
-      teckziteId,
+      userId:teckziteUser._id,
+      teckziteId:teckziteUser.teckziteId,
       userAnswers,
       submittedAt: new Date(),
     });

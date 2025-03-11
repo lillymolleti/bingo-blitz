@@ -6,8 +6,8 @@ interface Question {
   topic: string;
   text: string;
   options: string[];
-  correctAnswer: number;
-  explanation: string;
+  // correctAnswer: number;
+  // explanation: string;
   difficulty: string;
 }
 

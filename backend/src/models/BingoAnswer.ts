@@ -1,7 +1,8 @@
-import mongoose, { Schema, Document } from "mongoose";
+import mongoose, { Schema, Document, Types } from "mongoose";
 
 export interface IBingoAnswer extends Document {
-  teckziteId: string;
+  userId:mongoose.Types.ObjectId;
+  teckziteId:string;
   userAnswers: {
     question: string;
     option: number;
@@ -11,7 +12,15 @@ export interface IBingoAnswer extends Document {
 }
 
 const bingoAnswerSchema = new Schema<IBingoAnswer>({
-  teckziteId: { type: String, required: true,unique:true },
+  userId:{
+    type: Schema.Types.ObjectId, // Ensure this correctly refers to an ObjectId
+    ref: "TeckziteUser",
+    required: true,
+    unique: true, // Keep this only if each user can submit only once
+  },
+  teckziteId:{
+    type:String,unique:true
+  },
   userAnswers: [
     {
       question: { type: String, required: true },
@@ -20,6 +29,6 @@ const bingoAnswerSchema = new Schema<IBingoAnswer>({
     }
   ],
   submittedAt: { type: Date, default: Date.now }
-});
+}, { timestamps: true });
 
 export const BingoAnswerModel = mongoose.model<IBingoAnswer>("BingoAnswer", bingoAnswerSchema);

@@ -2,7 +2,9 @@ import mongoose, { Schema } from "mongoose";
 
 interface IUser extends Document {
   teckziteId: string;
-  name?:string;
+  branch:string;
+  emailId:string;
+  place?:string;
   phone?:string;
 }
 
@@ -12,12 +14,10 @@ const teckziteUserSchema = new Schema<IUser>({
     required: true,
     unique: true,
   },
-  name:{
-    type:String
-  },
-  phone:{
-    type:String,
-  }
+  branch:String,
+  emailId:String,
+  place:String,
+  phone:String
 });
 export const teckziteUserModel = mongoose.model<IUser>(
   "TeckziteUser",

@@ -3,7 +3,7 @@ import { CheckCircle } from 'lucide-react';
 
 interface Cell {
   topic: string;
-  difficulty: 'easy' | 'medium' | 'hard';
+  difficulty: string;
 }
 
 interface BingoBoardProps {

@@ -1,50 +1,45 @@
-import { topics, questions } from '../data/questions';
+// import { BoardCell } from "../pages/Home";
+// import { Question } from "../types";
+interface BoardCell {
+  topic: string;
+  difficulty: string;
+}
 
-// Generate a random 5x5 bingo board using only topics that have corresponding questions
-export const generateBingoBoard = () => {
-  const board = [];
-  // Filter topics to include only those with at least one matching question.
-  const validTopics = topics.filter(topic => questions.some(q => q.topic === topic));
+interface Question {
+  id: string;
+  topic: string;
+  text: string;
+  options: string[];
+  difficulty: string;
   
-  // Fallback to original topics if none match.
-  const availableTopics = validTopics.length ? [...validTopics] : [...topics];
+}
+
+
+export const generateBingoBoard = (questions: Question[]) => {
+  // Safely handle empty input
+  if (questions.length === 0) return [];
   
-  // Shuffle available topics
-  for (let i = availableTopics.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [availableTopics[i], availableTopics[j]] = [availableTopics[j], availableTopics[i]];
-  }
-  
-  // Create 25 cells (5x5 board) with topic and a difficulty based on cell position
+  // Create board with valid fallback values
+  // console.log("Questions data = ",questions)
+  const board: BoardCell[] = [];
   for (let i = 0; i < 25; i++) {
-    const topicIndex = i % availableTopics.length;
-    const topic = availableTopics[topicIndex];
-    
-    let difficulty: 'easy' | 'medium' | 'hard';
-    const row = Math.floor(i / 5);
-    const col = i % 5;
-    
-    if (row === 2 && col === 2) {
-      difficulty = 'hard';
-    } else if ((row >= 1 && row <= 3) && (col >= 1 && col <= 3)) {
-      difficulty = Math.random() > 0.4 ? 'medium' : 'hard';
-    } else {
-      difficulty = Math.random() > 0.6 ? 'easy' : 'medium';
-    }
-    
-    board.push({ topic, difficulty });
+    // const question = questions[i % questions.length]; // Cycle through questions
+    const question = questions[i];
+    board.push({ 
+      topic: question.topic || "Default Topic",
+      difficulty: (question.difficulty || "easy") as "easy" | "medium" | "hard"
+    });
   }
-  
   return board;
 };
 
-// Export checkForBingo so it can be imported in your Homepage component
+// Check for bingo patterns (rows, columns, diagonals)
 export const checkForBingo = (completedCells: number[]): number[][] => {
   const bingoLines: number[][] = [];
   
   // Check rows
   for (let row = 0; row < 5; row++) {
-    const rowCells = [row * 5, row * 5 + 1, row * 5 + 2, row * 5 + 3, row * 5 + 4];
+    const rowCells = [row*5, row*5+1, row*5+2, row*5+3, row*5+4];
     if (rowCells.every(cell => completedCells.includes(cell))) {
       bingoLines.push(rowCells);
     }
@@ -52,7 +47,7 @@ export const checkForBingo = (completedCells: number[]): number[][] => {
   
   // Check columns
   for (let col = 0; col < 5; col++) {
-    const colCells = [col, col + 5, col + 10, col + 15, col + 20];
+    const colCells = [col, col+5, col+10, col+15, col+20];
     if (colCells.every(cell => completedCells.includes(cell))) {
       bingoLines.push(colCells);
     }

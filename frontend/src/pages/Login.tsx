@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect,useRef } from "react";
 import { Button } from "../components/ui/button";
 import { Input } from "../components/ui/input";
 import { Card, CardContent } from "../components/ui/card";
@@ -8,10 +8,10 @@ import * as z from "zod";
 import axios from "axios";
 import { BACKEND_URL } from "../config";
 import { customizedToast } from "../utils/toast";
-import DotSpinnerLoader from "../components/loader/DotSpinner";
+// import DotSpinnerLoader from "../components/loader/DotSpinner";
 import { useNavigate } from 'react-router-dom';
 import { useRecoilState, useSetRecoilState } from "recoil";
-import { loaderAtom, tokenAtom, userAtom } from "../store/atoms";
+import {  tokenAtom, userAtom } from "../store/atoms";
 
 // Define form schema
 const loginSchema = z.object({
@@ -24,7 +24,8 @@ type LoginForm = z.infer<typeof loginSchema>;
 
 const LoginPage: React.FC = () => {
     const navigate = useNavigate();
-  const [loading, setLoading] = useRecoilState(loaderAtom);
+  // const [loading, setLoading] = useRecoilState(loaderAtom);
+  const loading = useRef<boolean|undefined>(undefined);
   const setAuthToken = useSetRecoilState(tokenAtom);
   const [user, setUser] = useRecoilState(userAtom);
 
@@ -42,8 +43,9 @@ const LoginPage: React.FC = () => {
   } = useForm<LoginForm>({ resolver: zodResolver(loginSchema) });
 
   const onSubmit = async (data: LoginForm) => {
-    setLoading(true);
+    loading.current=true;
     try {
+      await new Promise((resolve)=>setTimeout(resolve,3000));
       const response = await axios.post(`${BACKEND_URL}/teckzite/login`, data);
       const { message, token, teckziteId } = response.data;
 
@@ -72,13 +74,13 @@ const LoginPage: React.FC = () => {
         });
       }
     } finally {
-      setLoading(false);
+      loading.current=false;
     }
   };
 
-  if (loading) {
-    return <DotSpinnerLoader />;
-  }
+  // if (loading.current) {
+  //   return <div>Loading...</div>;
+  // }
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen w-full relative overflow-hidden bg-gradient-to-br from-[#0f1118] via-[#1a1b25] to-[#23162e]">
@@ -95,15 +97,15 @@ const LoginPage: React.FC = () => {
           <CardContent>
             <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
               <div>
-                <Input placeholder="Teckzite ID" {...register("teckziteId")} disabled={loading} className="text-gray-300" />
+                <Input placeholder="Teckzite ID" {...register("teckziteId")} disabled={loading.current} className="text-gray-300" />
                 {errors.teckziteId && <p className="text-red-500 text-sm">{errors.teckziteId.message}</p>}
               </div>
               <div>
-                <Input type="password" placeholder="Password" {...register("password")} disabled={loading} className="text-gray-300" />
+                <Input type="password" placeholder="Password" {...register("password")} disabled={loading.current} className="text-gray-300" />
                 {errors.password && <p className="text-red-500 text-sm">{errors.password.message}</p>}
               </div>
-              <Button type="submit" className="w-full" disabled={loading}>
-                {loading ? "Logging in..." : "Login"}
+              <Button type="submit" className="w-full" disabled={loading.current}>
+                {loading.current ? "Logging in..." : "Login"}
               </Button>
             </form>
           </CardContent>
