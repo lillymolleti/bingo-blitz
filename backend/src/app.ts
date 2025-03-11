@@ -8,7 +8,7 @@ import teckziteRouter from "./routes/teckziteRoutes";
 
 const app: express.Application = express();
 
-const allowedOrigins = ["http://localhost:5173", "https://bingo-blitz.vercel.app"];
+const allowedOrigins = ["http://localhost:5173", "https://bingo-blitz.vercel.app","https://bingo-blitz-eta.vercel.app/"];
 
 app.use(
   cors({
