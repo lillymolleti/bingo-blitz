@@ -16,17 +16,18 @@ export default function App() {
       if (document.hidden) {
         switchCountRef.current += 1;
         if (switchCountRef.current >= 3) {
-          // customizedToast({ type: "error", message: "⚠️ Test submitted due to multiple tab switches!" });
+          // customizedToast({ type: "error", message: " Test submitted due to multiple tab switches!" });
           // TODO: Add test submission logic here
+          customizedToast({ type: "warn", message: ` Dont Switch the tabs`});
         } else {
-          customizedToast({ type: "warn", message: `⚠️ Tab switching is not allowed! (${switchCountRef.current}/3)` });
-          customizedToast({ type: "warn", message: `⚠️ Tab switching is not allowed!` });
+          // customizedToast({ type: "warn", message: ` Tab switching is not allowed! (${switchCountRef.current}/3)` });
+          customizedToast({ type: "warn", message: ` Dont Switch the tabs`});
         }
       }
     };
 
     const handleBlur = () => {
-      customizedToast({ type: "warn", message: "⚠️ Do not leave the test window!" });
+      customizedToast({ type: "warn", message: " Do not leave the test window!" });
     };
 
     const disableRightClick = (e: MouseEvent) => e.preventDefault();
@@ -42,12 +43,12 @@ export default function App() {
 
     const disableCopy = (e: ClipboardEvent) => {
       e.preventDefault();
-      customizedToast({ type: "warn", message: "⚠️ Copying is not allowed!" });
+      customizedToast({ type: "warn", message: " Copying is not allowed!" });
     };
 
     const disablePaste = (e: ClipboardEvent) => {
       e.preventDefault();
-      customizedToast({ type: "warn", message: "⚠️ Pasting is not allowed!" });
+      customizedToast({ type: "warn", message: " Pasting is not allowed!" });
     };
 
     document.addEventListener("visibilitychange", handleVisibilityChange);

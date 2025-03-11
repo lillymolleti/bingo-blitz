@@ -12,6 +12,8 @@ import DotSpinner from '../components/loader/DotSpinner';
 import { BACKEND_URL } from '../config';
 import axios, { isAxiosError } from 'axios';
 import { Button } from '../components/ui/button';
+import confetti from "canvas-confetti";
+
 
 interface UserAnswer {
   question: string;
@@ -229,7 +231,7 @@ function Homepage() {
         [cellTopic]: prev[cellTopic].slice(1)
       }));
       setCurrentQuestion(nextQuestion);
-      setTimeLeft(30);
+      setTimeLeft(60);
       if (timer) clearInterval(timer);
       const newTimer = setInterval(() => {
         setTimeLeft((prev: number) => {
@@ -298,6 +300,11 @@ function Homepage() {
           type: "success",
           message: data.message || "Submission successful",
           position: "top-right"
+        });
+        confetti({
+          particleCount: 300,
+          spread: 80,
+          origin: { y: 0.6 }
         });
       } else {
         customizedToast({

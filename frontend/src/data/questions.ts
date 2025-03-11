@@ -250,18 +250,18 @@ export const questions = [
     "difficulty": "easy"
   },
   {
-    "id": "missing-number",
-    "topic": "Arrays & Algorithms",
-    "text": "You are given an array of size N-1 containing numbers from 1 to N in random order, with one number missing. What is the most efficient way to find the missing number?",
-    "options": ["Sort the array and check for the missing number", "Use XOR to cancel out duplicate numbers and find the missing one", "Use a hash table to mark present numbers and find the missing one", "Iterate through the array, checking for the missing number linearly"],
-    "difficulty": "medium"
-  },
-  {
     "id": "bit-counting",
     "topic": "Bit Manipulation",
     "text": "What is the time complexity of the following code? while (n > 0) { n = n & (n - 1); }",
     "options": ["O(N)", "O(log N)", "O(√N)", "O(1)"],
     "difficulty": "hard"
+  },
+  {
+    "id": "missing-number",
+    "topic": "Arrays & Algorithms",
+    "text": "You are given an array of size N-1 containing numbers from 1 to N in random order, with one number missing. What is the most efficient way to find the missing number?",
+    "options": ["Sort the array and check for the missing number", "Use XOR to cancel out duplicate numbers and find the missing one", "Use a hash table to mark present numbers and find the missing one", "Iterate through the array, checking for the missing number linearly"],
+    "difficulty": "medium"
   },
   {
     "id": "lcs",
@@ -327,18 +327,19 @@ export const questions = [
     "difficulty": "medium"
   },
   {
+  "id":"A",
+  "topic":"Smallest subarray",
+  "text":"Given an array A of N integers, find the smallest subarray whose sum is greater than or equal to S.Which approach ensures the optimal O(N) complexity?",
+  "options":["Sort the array and use binary search","Use two pointers and dynamically shrink the window","Use a min-heap to maintain the smallest subarray","Use brute force to check all subarrays"],
+  "difficulty":"Medium"
+  },
+  {
     "id": "lock-sequence",
     "topic": "Graph Algorithms",
     "text": "A security system uses a lock that requires a sequence of digits from 0-9. However, you can only enter a sequence where each digit appears exactly once before unlocking it. To generate the shortest possible valid input that unlocks the system, which algorithm should be used?",
     "options": ["Eulerian Path Construction", "Greedy Huffman Encoding", "Kruskal's Algorithm", "Dynamic Programming"],
     "difficulty": "hard"
-  },
-  {
-    "id": "fibonacci",
-    "topic": "Time Complexity & Recursion",
-    "text": "Consider the following recursive Fibonacci function: int fib(int n) { if (n <= 1) return n; return fib(n-1) + fib(n-2); } What is the time complexity of this function?",
-    "options": ["O(N)", "O(log N)", "O(2^N)", "O(N²)"],
-    "difficulty": "easy"
   }
+  
 ]
 

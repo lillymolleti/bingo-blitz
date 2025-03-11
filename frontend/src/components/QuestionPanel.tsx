@@ -29,7 +29,7 @@ const QuestionPanel: React.FC<QuestionPanelProps> = ({ question, onAnswer, timeL
     }, 3000);
   };
 
-  const progressWidth = (timeLeft / 30) * 100;
+  const progressWidth = (timeLeft / 60) * 100;
 
   return (
     <div className="bg-indigo-700 rounded-lg p-6 shadow-lg">
